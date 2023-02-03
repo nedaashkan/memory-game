@@ -1,0 +1,175 @@
+/* visible class its for fliping back and front card by add event lesner */
+/* .matched */
+/* visible */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.overlay-text {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #ff6d00;
+  font-family: Creepy, serif;
+  transition: background-color 500ms, font-size 500ms;
+}
+.overlay-text-small {
+  font-size: 0.3em;
+}
+@keyframes overlay-grow {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 0;
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.8);
+    font-size: 4em;
+  }
+}
+.overlay-text.visible {
+  display: flex;
+  flex-direction: column;
+  animation: overlay-grow 500ms forwards;
+}
+.game-body {
+  margin: 0 auto;
+  perspective: 500px;
+}
+@font-face {
+  font-family: "Creepy";
+  src: url("/fonts/Creepy.woff") format(woff),
+    url("/fonts/Creepy.woff2") format(woff2);
+}
+@font-face {
+  font-family: "Lunacy";
+  src: url("/fonts/Lunacy.woff") format(woff),
+    url("/fonts/Lunacy.woff2") format(woff2);
+}
+html {
+  min-height: 100vh;
+  cursor: url(/cursors/Ghost.cur), auto;
+}
+body {
+  background: radial-gradient(#9d5900, #3d2200);
+  margin: 0;
+}
+.card.visible .card-back {
+  transform: rotateY(-180deg);
+}
+
+.card.visible .card-front {
+  transform: rotateY(0);
+}
+.page-title {
+  color: #ff6d00;
+  font-family: Creepy, serif;
+  font-weight: normal;
+  text-align: center;
+  font-size: 3em;
+}
+.game-info {
+  font-family: Lunacy, serif;
+  color: #ffbb89;
+  font-size: 2em;
+}
+.card {
+  cursor: url("/cursors/GhostHover.cur"), auto;
+  position: relative;
+  background: transparent;
+  border: none;
+  height: 200px;
+}
+
+.card-front {
+  background-color: #ffbb89;
+  border-color: #333;
+  transform: rotateY(180deg);
+}
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 12px;
+  border-width: 1px;
+  border-style: solid;
+  backface-visibility: hidden;
+  transition: transform 500ms ease-in-out;
+}
+.card-value {
+  transform: scale(0.9);
+  transition: transform 100ms ease-in-out;
+}
+.card-front:hover .card-value {
+  transform: scale(1);
+}
+.card-back {
+  background-color: black;
+  border-color: #ff6d00;
+  transform: rotateY(0);
+}
+.cob-web {
+  position: absolute;
+  transition: width 100ms ease-in-out, height 100ms ease-in-out;
+  width: 3em;
+  height: 3em;
+}
+.card-face:hover .cob-web {
+  width: 4em;
+  height: 4em;
+}
+.cob-web-top-left {
+  transform: rotate(270deg);
+  top: 0;
+  left: 0;
+}
+.spider {
+  align-self: flex-start;
+  transition: transform 100ms ease-in-out;
+  transform: translateY(-5px);
+}
+.cob-web-top-right {
+  top: 0;
+  right: 0;
+}
+
+.cob-web-bottom-left {
+  transform: rotate(180deg);
+  bottom: 0;
+  left: 0;
+}
+
+.cob-web-bottom-right {
+  transform: rotate(90deg);
+  bottom: 0;
+  right: 0;
+}
+.card-back:hover .spider {
+  transform: translateY(0);
+}
+.card.matched .card-front .card-value {
+  animation: dance 1s linear infinite 500ms;
+}
+@keyframes dance {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-30deg);
+  }
+  75% {
+    transform: rotate(30deg);
+  }
+}
