@@ -1,16 +1,28 @@
-// music / sounds
 class AudioController {
   constructor() {
-    this.bgMusic = new Audio("audio/Assets_Audio_creepy.mp3");
-    this.flipSound = new Audio("audio/Assets_Audio_flip.wav");
-    this.matchSound = new Audio("audio/Assets_Audio_match.wav");
-    this.victorySound = new Audio("audio/Assets_Audio_victory.wav");
-    this.gameOverSound = new Audio("audio/Assets_Audio_gameOver.wav");
-    this.bgMusic.volume = 0.5;
+    this.bgMusic = new Audio(
+      //   "https://raw.githubusercontent.com/WebDevSimplified/Mix-Or-Match/master/Assets/Audio/creepy.mp3"
+      "https://srv19.y2mate.is/download?file=217fd058ab3d705cb84ab625987bf476251003003&token=7nLAnZHRbwntRF20P0za3g&expires=1655633506555&s=qLCaMibhy7VUuLuoVkpWrA"
+    );
+    this.flipSound = new Audio(
+      "https://raw.githubusercontent.com/WebDevSimplified/Mix-Or-Match/master/Assets/Audio/flip.wav"
+    );
+    this.matchSound = new Audio(
+      "https://raw.githubusercontent.com/WebDevSimplified/Mix-Or-Match/master/Assets/Audio/match.wav"
+    );
+    this.victorySound = new Audio(
+      "https://raw.githubusercontent.com/WebDevSimplified/Mix-Or-Match/master/Assets/Audio/victory.wav"
+    );
+    this.gameOverSound = new Audio("Assets/Audio/gameOver.wav");
+    this.bgMusic.volume = 0.4;
     this.bgMusic.loop = true;
   }
   startMusic() {
     this.bgMusic.play();
+  }
+  stopMusic() {
+    this.bgMusic.pause();
+    this.bgMusic.currentTime = 0;
   }
   flip() {
     this.flipSound.play();
@@ -19,6 +31,7 @@ class AudioController {
     this.matchSound.play();
   }
   victory() {
+    this.stopMusic();
     this.victorySound.play();
   }
   gameOver() {
@@ -26,6 +39,7 @@ class AudioController {
     this.gameOverSound.play();
   }
 }
+
 let audioController = new AudioController();
 // cards Array
 let cardsArray = [
@@ -88,13 +102,24 @@ let cardsChosen = [];
 let cardsIndex = [];
 let cardsWon = [];
 let clicked = 0;
-let overlayText = document.querySelectorAll(".overlay-text");
-overlayText[0].addEventListener("click", displayOverlayTextStart);
-function displayOverlayTextStart() {
-  overlayText[0].classList.remove("visible");
+let overlayText = Array.from(document.querySelectorAll(".overlay-text"));
+function ready() {
+  overlayText.forEach((overlay) => {
+    overlay.addEventListener("click", () => {
+      overlay.classList.remove("visible");
+      audioController.startMusic();
+      startGame();
+      displayFlips.textContent = 0;
+      clicked = 0;
+      displayScore.textContent = 0;
+      cardsWon.length = 0;
+      displayScore.textContent = cardsWon.length;
+    });
+  });
 }
+
 function startGame() {
-  let gameGridHtml = `<div class="row gx-2 gx-lg-3 gx-md-4 mt-lg-4 d-flex justify-content-center">`;
+  let gameGridHtml = `<div class="row gx-2 gx-lg-3 gx-md-4 d-flex justify-content-center">`;
   for (let i = 0; i < cardsArray.length; i++) {
     gameGridHtml =
       gameGridHtml +
@@ -182,9 +207,26 @@ function checkForMatch() {
   cardsIndex = [];
   displayScore.textContent = cardsWon.length;
   if (cardsWon.length === cardsArray.length / 2) {
+    overlayText[2].classList.add("visible");
+    audioController.victory();
   }
 }
+let seconds = 100;
+let displayTimeRemaining = document.getElementById("time-remaining");
+function timeDecrease() {
+  seconds -= 1;
+  displayTimeRemaining.textContent = seconds;
+}
+
 function renderGame() {
+  ready();
   startGame();
 }
 renderGame();
+let volumeOff = document.getElementById("volume-off");
+let volumeOn = document.getElementById("volume-on");
+volumeOff.style.display = "none";
+function volumeOnOff() {
+  volumeOff.style.display = "block";
+  volumeOn.style.display = "none";
+}
