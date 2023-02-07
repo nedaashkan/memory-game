@@ -5,7 +5,7 @@ class AudioController {
     this.matchSound = new Audio("audio/Assets_Audio_match.wav");
     this.victorySound = new Audio("audio/Assets_Audio_victory.wav");
     this.gameOverSound = new Audio("audio/Assets_Audio_gameOver.wav");
-    this.bgMusic.volume = 0.4;
+    this.bgMusic.volume = 0.3;
     this.bgMusic.loop = true;
   }
   startMusic() {
@@ -215,7 +215,7 @@ function renderGame() {
 }
 
 let displayTimeRemaining = document.getElementById("time-remaining");
-let timeLeft = 100;
+let timeLeft;
 let timeId;
 function displayTime() {
   timeId = setInterval(countDown, 1000);
