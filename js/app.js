@@ -213,14 +213,6 @@ function renderGame() {
   ready();
   startGame();
 }
-renderGame();
-let volumeOff = document.getElementById("volume-off");
-let volumeOn = document.getElementById("volume-on");
-volumeOff.style.display = "none";
-function volumeOnOff() {
-  volumeOff.style.display = "block";
-  volumeOn.style.display = "none";
-}
 
 let displayTimeRemaining = document.getElementById("time-remaining");
 let timeLeft = 100;
@@ -242,3 +234,4 @@ function countDown() {
     }
   }
 }
+renderGame();
