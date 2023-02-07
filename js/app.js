@@ -102,9 +102,8 @@ function ready() {
       cardsArray.sort(() => 0.5 - Math.random());
       audioController.startMusic();
       startGame();
-      timeLeft = 100;
-      displayTimeRemaining.textContent = 100;
       displayTime();
+      displayTimeRemaining.textContent = timeLeft;
       displayFlips.textContent = 0;
       clicked = 0;
       displayScore.textContent = 0;
@@ -215,19 +214,22 @@ function renderGame() {
 }
 
 let displayTimeRemaining = document.getElementById("time-remaining");
-let timeLeft;
 let timeId;
+let timeLeft;
 function displayTime() {
+  timeLeft = 100;
   timeId = setInterval(countDown, 1000);
 }
 function countDown() {
+  console.log();
   if (timeLeft === -1) {
     clearTimeout(timeId);
     overlayText[1].classList.add("visible");
     audioController.gameOver();
   } else {
     if (victory === true) {
-      Timeout(timeId);
+      clearTimeout(timeId);
+      victory = false;
     } else {
       displayTimeRemaining.textContent = timeLeft;
       timeLeft--;
